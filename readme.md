@@ -1,6 +1,6 @@
 # Zgrab2 Wrapper
 
-Dieses Skript führt Scans von Domains/IPs mithilfe von Zgrab2 durch. Es unterstützt verschiedene Protokolle,
+Dieses Skript führt Scans von Domains/IPs mithilfe von [Zgrab2](https://github.com/zmap/zgrab2) durch. Es unterstützt verschiedene Protokolle,
 darunter bacnet, banner, dnp3, fox, ftp, http, imap, ipp, modbus, mongodb, mssql, mysql, ntp, oracle, pop3,
 postgres, redis, siemens, smb, smtp, ssh, telnet, tls. <br><br>
 Das Skript erstellt automatisch einen Ordner mit dem Namen der Ziel-Domain/IP und speichert die Ergebnisse bzw. Logs von Zgrab2, 
