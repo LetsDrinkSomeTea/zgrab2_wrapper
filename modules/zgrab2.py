@@ -1,3 +1,5 @@
+#!/bin/python3
+
 import json
 import os
 import subprocess
@@ -7,14 +9,16 @@ from threading import Thread
 
 class Zgrab2Config:
     path = ""
+    verbose = False
+    json = False
 
 
 class Zgrab2:
-    def __init__(self, target, verbose=False):
+    def __init__(self, target):
         self.tasks = []
         self.path = Zgrab2Config.path
         self.target = target.encode()
-        self.verbose = verbose
+        self.verbose = Zgrab2Config.verbose
 
         self.modules = [
             Zgrab2Module('bacnet', self),
@@ -61,14 +65,27 @@ class Zgrab2:
         """Führt einen Scan aus und gibt eine Liste von Zgrab2Result Objekten zurück.
         Wrapper für start_scan und get_results"""
         self.start_scan()
+        count_running, count_total = self.get_count_running()
 
-        if self.verbose: print("Scanning...", end="", flush=True)
+        if self.verbose:
+            print("Scanning...", end="", flush=True)
+            count_done = count_total - count_running
+            print(f'{count_done}/{count_total}', flush=True)
 
         while self.is_running():
             time.sleep(1)
 
-            if self.verbose: print(".", end="", flush=True)
-        if self.verbose: print("Done")
+            if self.verbose:
+                print(".", end="", flush=True)
+
+            if count_running < self.get_count_running()[0]:
+                count_running = self.get_count_running()[0]
+                count_done = count_total - count_running
+                if self.verbose:
+                    print(f'{count_done}/{count_total}', flush=True)
+
+        if self.verbose:
+            print("Done")
 
         return self.get_results()
 
@@ -79,13 +96,21 @@ class Zgrab2:
                 return True
         return False
 
-    def get_status(self) -> dict:
+    def get_status_by_name(self) -> dict:
         """Gibt ein Dictionary mit den Namen der Module und deren Status zurück
         Status kann "running" oder "completed" sein"""
         status = {}
         for task in self.tasks:
             status[task.getName()] = "running" if task.is_alive() else "completed"
         return status
+
+    def get_count_running(self) -> (int, int):
+        """Gibt ein Tupel mit den abgeschlossenen und der gesamten Anzahl an Modulen zurück"""
+        count_done = 0
+        for task in self.tasks:
+            if task.is_alive():
+                count_done += 1
+        return count_done, len(self.tasks)
 
     def get_results(self) -> list:
         """Gibt eine Liste von Zgrab2Result Objekten zurück"""
@@ -102,7 +127,7 @@ class Zgrab2:
             file_path = f'outputs/{self.target.decode("utf8")}/{module.command}.inf'
             if os.path.exists(file_path):
                 os.remove(file_path)
-            os.removedirs(f'outputs/{self.target.decode("utf8")}')
+        os.removedirs(f'outputs/{self.target.decode("utf8")}')
 
 
 # Base class der Zgrab2 Module
@@ -132,6 +157,7 @@ class Zgrab2Module:
 
 class HttpModule(Zgrab2Module):
     """HTTP Module, da es den max-redirects Parameter braucht"""
+
     def __init__(self, zgrab2: Zgrab2, max_redirects=5):
         super().__init__('http', zgrab2)
         self.max_redirects = max_redirects
