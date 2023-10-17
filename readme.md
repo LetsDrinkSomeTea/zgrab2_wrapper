@@ -56,5 +56,6 @@ Du kannst die erforderlichen Abhängigkeiten und das Zgrab2-Tool automatisch ins
    ```bash
    ./init.sh
    ```
+   (Ggf. muss die Datei vorher noch ausführbar gemacht werden: ```chmod a+x init.sh```)
 
 Nach der Ausführung von `init.sh` kannst du das Skript mit `./main.py` starten, wie oben beschrieben.
