@@ -1,0 +1,43 @@
+# Lizenz
+
+Dieses Projekt ist öffentlich zugänglich und unterliegt den folgenden Lizenzen:
+
+## ZGrab2
+
+ZGrab2 ist ein Originalwerk, das an der University of Michigan erstellt wurde und unter der Apache 2.0 Lizenz steht.
+Es enthält jedoch Forks von mehreren Paketen aus der Golang-Standardbibliothek sowie Code aus dem BoringSSL-Testrunner.
+Dateien, die von Google erstellt wurden, und neue Dateien in Forks von Paketen, die von Google gepflegt werden, 
+haben ein Copyright von Google und unterliegen der ISC-Lizenz. 
+Alle anderen Dateien unterliegen dem Copyright der Regents of the University of Michigan und stehen unter der Apache 2.0 Lizenz.
+
+- **Apache License für ZGrab-Code:**
+
+    [Apache License, Version 2.0, Januar 2004](http://www.apache.org/licenses/)
+
+- **ISC License für Google-Code:**
+
+    Die ISC-Lizenz gilt für Code von Google.
+
+    ```
+    /* Copyright (c) 2016, Google Inc.
+
+     * Permission to use, copy, modify, and/or distribute this software for any
+     * purpose with or without fee is hereby granted, provided that the above
+     * copyright notice and this permission notice appear in all copies.
+     *
+     * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+     * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+     * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+     * SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+     * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION
+     * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
+     * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+     */
+    ```
+
+Die Verwendung und Verteilung dieses Projekts unterliegt den oben genannten Bedingungen.
+Jegliche Haftung wird, soweit gesetzlich zulässig, ausgeschlossen.
+
+Bitte beachte, dass die hier angegebenen Lizenzen und Bedingungen für das Zgrab2-Tool gelten, 
+das im Rahmen dieses Projekts verwendet wird. Weitere Informationen und Lizenzen für externe Abhängigkeiten
+können in den entsprechenden Quellcode- oder Lizenzdateien gefunden werden.
