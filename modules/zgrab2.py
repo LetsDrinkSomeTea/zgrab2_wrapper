@@ -52,7 +52,7 @@ class Zgrab2:
         for module in self.modules:
             task = Thread(target=module.run)
             self.tasks.append(task)
-            task.setName(module.command)
+            task.name = module.command
             task.start()
 
     def stop_scan(self) -> None:
@@ -101,16 +101,16 @@ class Zgrab2:
         Status kann "running" oder "completed" sein"""
         status = {}
         for task in self.tasks:
-            status[task.getName()] = "running" if task.is_alive() else "completed"
+            status[task.name] = "running" if task.is_alive() else "completed"
         return status
 
     def get_count_running(self) -> (int, int):
         """Gibt ein Tupel mit den abgeschlossenen und der gesamten Anzahl an Modulen zurück"""
-        count_done = 0
+        count_running = 0
         for task in self.tasks:
             if task.is_alive():
-                count_done += 1
-        return count_done, len(self.tasks)
+                count_running += 1
+        return count_running, len(self.tasks)
 
     def get_results(self) -> list:
         """Gibt eine Liste von Zgrab2Result Objekten zurück"""
