@@ -1,8 +1,10 @@
-Hier ist eine `readme.md`-Datei, die die Verwendung der Parameter in deinem Python-Skript erklärt und die Anforderungen an Python 3, Golang und Git auflistet. Es enthält auch Anweisungen zum Installieren und Verwenden des Skripts mithilfe einer `init.sh`-Datei.
-
 # Zgrab2 Wrapper
 
-Dieses Skript führt Scans von Domains/IPs mithilfe von Zgrab2 durch. Es unterstützt verschiedene Protokolle, darunter bacnet, banner, dnp3, fox, ftp, http, imap, ipp, modbus, mongodb, mssql, mysql, ntp, oracle, pop3, postgres, redis, siemens, smb, smtp, ssh, telnet, tls.
+Dieses Skript führt Scans von Domains/IPs mithilfe von Zgrab2 durch. Es unterstützt verschiedene Protokolle,
+darunter bacnet, banner, dnp3, fox, ftp, http, imap, ipp, modbus, mongodb, mssql, mysql, ntp, oracle, pop3,
+postgres, redis, siemens, smb, smtp, ssh, telnet, tls. <br><br>
+Das Skript erstellt automatisch einen Ordner mit dem Namen der Ziel-Domain/IP und speichert die Ergebnisse bzw. Logs von Zgrab2, 
+zusätzlich werden die Ergebnisse zusammengefasst ausgegeben. 
 
 ## Verwendung
 
@@ -16,7 +18,7 @@ python3 main.py [Optionen] Ziel
 
 ### Optionen
 
-- `-d`, `--delete`: Wenn diese Option angegeben ist, wird das Ziel gelöscht.
+- `-d`, `--delete`: Wenn diese Option angegeben ist, werden die Log-Dateien gelöscht.
 - `-v`, `--verbose`: Aktiviert den Verbose-Modus, um detaillierte Informationen während des Scans anzuzeigen.
 - `-j`, `--json`: Gibt die Ausgabe im JSON-Format aus.
 
@@ -24,11 +26,14 @@ python3 main.py [Optionen] Ziel
 
 Stelle sicher, dass die folgenden Anforderungen erfüllt sind, bevor du das Skript ausführst:
 
-- **Python 3:** Du kannst Python 3 von [python.org](https://www.python.org/downloads/) herunterladen und installieren.
+- **Python 3:** Du kannst Python 3 von [python.org](https://www.python.org/downloads/) herunterladen und installieren.<br>
+Oder ```apt install python3``` verwenden
 
-- **Golang:** Installiere Golang von der offiziellen [Golang-Website](https://golang.org/doc/install).
+- **Golang:** Installiere Golang von der offiziellen [Golang-Website](https://golang.org/doc/install).<br>
+Oder ```apt install golang-go``` verwenden
 
-- **Git:** Git kann von der offiziellen [Git-Website](https://git-scm.com/downloads) heruntergeladen und installiert werden.
+- **Git:** Git kann von der offiziellen [Git-Website](https://git-scm.com/downloads) heruntergeladen und installiert werden.<br>
+Oder ```apt install git``` verwenden
 
 ## Installation
 
@@ -37,7 +42,7 @@ Du kannst die erforderlichen Abhängigkeiten und das Zgrab2-Tool automatisch ins
 1. Klone dieses Repository:
 
    ```bash
-   git clone https://github.com/dein-benutzername/dein-repository.git
+   git clone https://github.com/LetsDrinkSomeTea/zgrap2_wrapper
    ```
 
 2. Navigiere in das Verzeichnis:
