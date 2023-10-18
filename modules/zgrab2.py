@@ -64,25 +64,21 @@ class Zgrab2:
     def scan(self) -> list:
         """Führt einen Scan aus und gibt eine Liste von Zgrab2Result Objekten zurück.
         Wrapper für start_scan und get_results"""
+        start_time = time.time()
+        sleep_time = 10 if self.verbose else 1
         self.start_scan()
-        count_running, count_total = self.get_count_running()
 
         if self.verbose:
-            print("Scanning...", end="", flush=True)
-            count_done = count_total - count_running
-            print(f'{count_done}/{count_total}', flush=True)
+            print("Scanning...", flush=True)
 
         while self.is_running():
-            time.sleep(1)
+            time.sleep(sleep_time)
 
             if self.verbose:
-                print(".", end="", flush=True)
-
-            if count_running < self.get_count_running()[0]:
-                count_running = self.get_count_running()[0]
-                count_done = count_total - count_running
-                if self.verbose:
-                    print(f'{count_done}/{count_total}', flush=True)
+                completed_ips = self.get_count_completed_ips()
+                elapsed_time = time.time() - start_time
+                elapsed_time = time.strftime("%H:%M:%S", time.gmtime(elapsed_time))
+                print(f'[{elapsed_time}] Completed IPs: {completed_ips}', flush=True)
 
         if self.verbose:
             print("Done")
@@ -103,6 +99,10 @@ class Zgrab2:
         for task in self.tasks:
             status[task.name] = "running" if task.is_alive() else "completed"
         return status
+
+    def get_count_completed_ips(self) -> int:
+        """Gibt die Anzahl der abgeschlossenen IPs des Threads mit dem höchsten Fortschritt zurück"""
+        return max([module.get_completed_ips() for module in self.modules])
 
     def get_count_running(self) -> (int, int):
         """Gibt ein Tupel mit den abgeschlossenen und der gesamten Anzahl an Modulen zurück"""
@@ -133,6 +133,7 @@ class Zgrab2:
 # Base class der Zgrab2 Module
 class Zgrab2Module:
     def __init__(self, command, zgrab2: Zgrab2):
+        self.process = None
         self.zgrab2 = zgrab2
         self.command = command
 
@@ -151,8 +152,20 @@ class Zgrab2Module:
         subprocess_args.extend(args)
 
         subprocess.run(['mkdir', '-p', output_dir])
-        subprocess.run(subprocess_args, input=self.zgrab2.target,
-                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+        self.process = subprocess.run(subprocess_args, input=self.zgrab2.target,
+                                      stdout=subprocess.DEVNULL,
+                                      stderr=subprocess.DEVNULL)
+
+    def get_completed_ips(self):
+        output_dir = f'outputs/{self.zgrab2.target.decode("utf8")}'
+        file_path = f'{output_dir}/{self.command}.inf'
+
+        if not os.path.exists(file_path):
+            return 0
+        with open(file_path, 'r') as f:
+            lines = f.readlines()
+            return len(lines)
 
 
 class HttpModule(Zgrab2Module):
